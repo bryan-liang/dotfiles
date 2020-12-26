@@ -145,7 +145,8 @@ then
     success "dependencies installed"
     echo ''
     echo "Now updating dependencies..."
-    pip3 install --upgrade setuptools
+    /usr/local/bin/python3 -m pip install --upgrade pip
+    /usr/local/bin/python3 -m pip install --upgrade setuptools
   else
     fail "error installing dependencies"
   fi
@@ -175,15 +176,14 @@ jd_Symlinks () {
   ln -s $HOME/.dotfiles/tmux $HOME/.tmux && success "symlink for $HOME/.tmux folder created"
 
   # symlink VSCode User Settings
-  if [ -d $HOME/Library/Application\ Support/Code/User ] ; then
-    echo "Making backup of current settings.json and creating symlink..."
-    echo ''
-    mv $HOME/Library/Application\ Support/Code/User/settings.json $HOME/Library/Application\ Support/Code/User/settings.old.json && success "settings.old.json created"
-    ln -s $HOME/.dotfiles/code/settings.json $HOME/Library/Application\ Support/Code/User/settings.json && success "settings.json for vs code symlink created"
-  else
-    info "symlink for vs code settings not created"
-    echo "VS Code does not appear to be installed or has not been launched yet. Cannot create symlink for VS Code User settings..."
+  if [ ! -d $HOME/Library/Application\ Support/Code/User ] ; then
+    echo "Creating VSCode User settings directory... "
   fi
+
+  echo "Making backup of current settings.json and creating symlink..."
+  echo ''
+  mv $HOME/Library/Application\ Support/Code/User/settings.json $HOME/Library/Application\ Support/Code/User/settings.old.json && success "settings.old.json created"
+  ln -s $HOME/.dotfiles/code/settings.json $HOME/Library/Application\ Support/Code/User/settings.json && success "settings.json for vs code symlink created"
 
   # airport symlink
   if ! [ -f /usr/local/bin/airport ]

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eou pipefail
 
-source /dev/stdin <<< "$(curl -fsSL https://raw.githubusercontent.com/jldeen/dotfiles/mac/script/prompt)"
+source /dev/stdin <<< "$(curl -fsSL https://raw.githubusercontent.com/bryan-liang/dotfiles/mac/script/prompt)"
 
 brewInstall () {
     # Install brew
@@ -9,7 +9,7 @@ brewInstall () {
     # Install the correct homebrew for each OS type
         if test "$(uname)" = "Darwin"
         then
-            ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             success 'brew installed'
         elif test "$(expr substr $(uname -s) 1 5)" = "Linux"
         then
@@ -193,13 +193,13 @@ wombatColorSchemeInstall
 
 # Pull down personal dotfiles
 echo ''
-read -p "Do you want to use jldeen's dotfiles? y/n" -n 1 -r
+read -p "Do you want to use bryan-liang's dotfiles? y/n" -n 1 -r
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     echo ''
-	echo "Now pulling down jldeen dotfiles..."
-	git clone https://github.com/jldeen/dotfiles.git ~/.dotfiles
+	echo "Now pulling down bryan-liang dotfiles..."
+	git clone https://github.com/bryan-liang/dotfiles.git ~/.dotfiles
 	echo ''
 	cd $HOME/.dotfiles && echo "switched to .dotfiles dir..."
 	echo ''
@@ -210,13 +210,13 @@ then
 
     if [[ $? -eq 0 ]]
     then
-        echo "Successfully configured your environment with jldeen's macOS dotfiles..."
+        echo "Successfully configured your environment with bryan-liang's macOS dotfiles..."
     else
-        echo "jldeen's macOS dotfiles were not applied successfully..." >&2
+        echo "bryan-liang's macOS dotfiles were not applied successfully..." >&2
 fi
 else 
 	echo ''
-    echo "You chose not to apply jldeen's macOS dotfiles. You will need to configure your environment manually..."
+    echo "You chose not to apply bryan-liang's macOS dotfiles. You will need to configure your environment manually..."
 	echo ''
 	echo "Setting defaults for .zshrc and .bashrc..."
 	echo ''
